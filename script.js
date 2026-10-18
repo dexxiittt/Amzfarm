@@ -1,12 +1,12 @@
 const WA = 'https://wa.me/628111612316';
-const rp = n => 'Rp ' + n.toLocaleString('id-ID');
+const rp = n => 'Rp ' + Number(n).toLocaleString('id-ID');
 const P = [
   {id:'pakcoy', name:'Pakcoy Hidroponik', price:30000, per:'kg', unit:'kg', lbl:'Jumlah (kg)', note:'Renyah, segar, dipanen sesuai pesanan.', img:'https://raw.githubusercontent.com/dexxiittt/Image/main/Pokcoy.jpg'},
   {id:'sweet', name:'Sweet Mint', price:10000, per:'50 gram', unit:'pak (50 g)', lbl:'Jumlah 50g', note:'Aroma manis lembut untuk teh dan minuman.', img:'https://raw.githubusercontent.com/dexxiittt/Image/main/Sweet%20mint.jpg'},
   {id:'apple', name:'Apple Mint', price:15000, per:'50 gram', unit:'pak (50 g)', lbl:'Jumlah 50g', note:'Daun berbulu dengan aroma apel yang segar.', img:'https://raw.githubusercontent.com/dexxiittt/Image/main/Apple%20mint.jpg'}
 ];
-const qty = {pakcoy:1, sweet:1, apple:1};
 
+// Render produk di halaman utama
 document.getElementById('grid').innerHTML = P.map(p => `
   <article class="card flex flex-col overflow-hidden">
     <img src="${p.img}" alt="${p.name}" style="width:100%;height:180px;object-fit:cover;display:block">
@@ -25,40 +25,68 @@ document.getElementById('grid').innerHTML = P.map(p => `
             <button type="button" data-act="plus" data-id="${p.id}" aria-label="Tambah jumlah ${p.name}">+</button>
           </div>
         </div>
-        <div class="grid grid-cols-2 gap-2"><button type="button" class="btn alt" style="padding-inline:.5rem" data-act="add" data-id="${p.id}">+ Keranjang</button><button type="button" class="btn" style="padding-inline:.5rem" data-act="buy" data-id="${p.id}">Beli sekarang</button></div>
+        <div class="grid grid-cols-2 gap-2">
+          <button type="button" class="btn alt" style="padding-inline:.5rem" data-act="add" data-id="${p.id}">+ Keranjang</button>
+          <button type="button" class="btn" style="padding-inline:.5rem" data-act="buy" data-id="${p.id}">Beli sekarang</button>
+        </div>
       </div>
     </div>
   </article>`).join('');
 
 const clamp = v => Math.max(1, Math.min(99, parseInt(v) || 1));
 const grid = document.getElementById('grid');
+
+// Handler tombol stepper (+ / -), + Keranjang, dan Beli Sekarang
 grid.addEventListener('click', e => {
   const b = e.target.closest('button[data-act]'); if(!b) return;
-  const id = b.dataset.id, inp = document.getElementById('q-'+id);
-  if(b.dataset.act==='minus') qty[id] = clamp(qty[id]-1);
-  if(b.dataset.act==='plus') qty[id] = clamp(qty[id]+1);
-  inp.value = qty[id];
-  if(b.dataset.act==='buy'){ addCart(id, qty[id], true); openOrder(); }
-  if(b.dataset.act==='add') addCart(id, qty[id]);
+  const id = b.dataset.id;
+  const inp = document.getElementById('q-' + id);
+  let currentVal = clamp(inp ? inp.value : 1);
+
+  if(b.dataset.act === 'minus') {
+    currentVal = clamp(currentVal - 1);
+    if(inp) inp.value = currentVal;
+  }
+  if(b.dataset.act === 'plus') {
+    currentVal = clamp(currentVal + 1);
+    if(inp) inp.value = currentVal;
+  }
+  if(b.dataset.act === 'add') {
+    addCart(id, currentVal);
+  }
+  if(b.dataset.act === 'buy') {
+    addCart(id, currentVal, true);
+    openOrder();
+  }
 });
+
 grid.addEventListener('change', e => {
-  if(e.target.matches('input[data-id]')){ qty[e.target.dataset.id] = clamp(e.target.value); e.target.value = qty[e.target.dataset.id]; }
+  if(e.target.matches('input[data-id]')){
+    e.target.value = clamp(e.target.value);
+  }
 });
 
 const dlg = document.getElementById('checkoutPage'), form = document.getElementById('form');
-document.querySelector('footer').before(dlg);
+if (document.querySelector('footer')) {
+  document.querySelector('footer').before(dlg);
+}
+
 let order = [], fromCart = false;
+
 function openOrder(){
   fromCart = true;
   if(!Object.keys(cart).length) return toast('Keranjang masih kosong');
-  
+
   renderSummary();
-  cartDlg.close();
-  
+  if(cartDlg && cartDlg.open) cartDlg.close();
+
   document.getElementById('formView').classList.remove('hidden');
   document.getElementById('okView').classList.add('hidden');
-  document.querySelector('main').classList.add('hidden'); dlg.classList.remove('hidden'); window.scrollTo(0, 0);
+  document.querySelector('main').classList.add('hidden');
+  dlg.classList.remove('hidden');
+  window.scrollTo(0, 0);
 }
+
 document.getElementById('close').onclick = showShop;
 document.getElementById('done').onclick = showShop;
 document.querySelectorAll('header.top a[href^="#"]').forEach(a => a.addEventListener('click', showShop));
@@ -85,7 +113,6 @@ form.addEventListener('submit', e => {
   }
 
   const totalHarga = rp(total(order));
-
   let text = `Halo kak, pesan ${daftarPesanan}`;
 
   const nama = f.get('nama');
@@ -112,37 +139,75 @@ const cartDlg = document.getElementById('cartDlg');
 let cart = {};
 try { cart = JSON.parse(localStorage.getItem('amz-cart') || '{}') || {}; } catch(_) { cart = {}; }
 Object.keys(cart).forEach(id => { if(P.some(p => p.id===id)) cart[id] = clamp(cart[id]); else delete cart[id]; });
+
 const saveCart = () => { try { localStorage.setItem('amz-cart', JSON.stringify(cart)); } catch(_) {} };
-const cartItems = () => Object.keys(cart).map(id => ({id, n:cart[id]}));
-const total = items => items.reduce((s, i) => s + P.find(p => p.id===i.id).price * i.n, 0);
+const cartItems = () => Object.keys(cart).map(id => ({id, n: parseInt(cart[id]) || 1}));
+const total = items => items.reduce((s, i) => {
+  const prod = P.find(p => p.id===i.id);
+  return s + (prod ? prod.price * i.n : 0);
+}, 0);
+
 let tt;
-function toast(t){ const el = document.getElementById('toast'); el.textContent = t; el.classList.add('show'); clearTimeout(tt); tt = setTimeout(() => el.classList.remove('show'), 2200); }
-function addCart(id, n, quiet){
-  cart[id] = Math.min(99, (cart[id] || 0) + n); saveCart(); renderCart();
-  qty[id] = 1; document.getElementById('q-'+id).value = 1;
-  if(!quiet) toast(P.find(p => p.id===id).name + ' masuk keranjang');
+function toast(t){
+  const el = document.getElementById('toast');
+  if(!el) return;
+  el.textContent = t;
+  el.classList.add('show');
+  clearTimeout(tt);
+  tt = setTimeout(() => el.classList.remove('show'), 2200);
 }
+
+// Fungsi Tambah Keranjang
+function addCart(id, n, quiet){
+  n = clamp(n);
+  cart[id] = Math.min(99, (parseInt(cart[id]) || 0) + n);
+  saveCart();
+  renderCart();
+
+  const inp = document.getElementById('q-' + id);
+  if(inp) inp.value = 1;
+
+  if(!quiet) toast((P.find(p => p.id===id)?.name || 'Produk') + ' masuk keranjang');
+}
+
+// Render Item di Modal Keranjang
 function renderCart(){
   const ids = Object.keys(cart);
   const badge = document.getElementById('cartCount');
-  const count = ids.reduce((s, id) => s + cart[id], 0);
-  badge.textContent = count; badge.style.display = count ? 'grid' : 'none';
+  const count = ids.reduce((s, id) => s + (parseInt(cart[id]) || 0), 0);
+  if(badge) {
+    badge.textContent = count;
+    badge.style.display = count ? 'grid' : 'none';
+  }
+
   const body = document.getElementById('cartBody');
+  if(!body) return;
+
   if(!ids.length){
     body.innerHTML = '<p style="color:var(--muted)">Keranjang masih kosong. Pilih produk, lalu tekan “+ Keranjang”.</p><button type="button" class="btn mt-4 w-full" data-c="close">Lihat produk</button>';
     return;
   }
+
   body.innerHTML = ids.map(id => {
-    const p = P.find(x => x.id===id), n = cart[id];
+    const p = P.find(x => x.id===id), n = parseInt(cart[id]) || 1;
+    if(!p) return '';
     return `<div class="border-b py-3" style="border-color:var(--line)"><div class="flex justify-between gap-3"><div><p class="font-extrabold">${p.name}</p><p class="text-sm" style="color:var(--muted)">${rp(p.price)} / ${p.per}</p></div><p class="font-extrabold">${rp(p.price*n)}</p></div><div class="mt-2 flex items-center justify-between"><div class="stepper"><button type="button" data-c="minus" data-id="${id}" aria-label="Kurangi ${p.name}">−</button><input value="${n}" readonly aria-label="Jumlah ${p.name}"><button type="button" data-c="plus" data-id="${id}" aria-label="Tambah ${p.name}">+</button></div><button type="button" class="btn-hapus" data-c="del" data-id="${id}"><i class="fa-solid fa-trash-can"></i><span>Hapus</span></button></div></div>`;
   }).join('') + `<div class="mt-4 flex justify-between text-lg font-extrabold"><span>Total</span><span>${rp(total(cartItems()))}</span></div><button type="button" class="btn mt-4 w-full" data-c="checkout">Checkout semua</button>`;
 }
 
+function showShop(){
+  dlg.classList.add('hidden');
+  document.querySelector('main').classList.remove('hidden');
+  window.scrollTo(0, 0);
+}
+
+// Render Ringkasan Pesanan di Halaman Checkout
 function renderSummary(){
   order = cartItems();
   if(!order.length){ showShop(); toast('Keranjang masih kosong'); return; }
   document.getElementById('sumList').innerHTML = order.map(i => {
     const p = P.find(x => x.id===i.id);
+    if(!p) return '';
     return `<li class="border-b py-3" style="border-color:var(--line)"><div class="flex justify-between gap-3"><div><p class="font-extrabold">${p.name}</p><p class="text-sm" style="color:var(--muted)">${rp(p.price)} / ${p.per}</p></div><p class="font-extrabold">${rp(p.price*i.n)}</p></div><div class="mt-2 flex items-center justify-between"><div class="stepper"><button type="button" data-s="minus" data-id="${i.id}" aria-label="Kurangi ${p.name}">−</button><input value="${i.n}" readonly aria-label="Jumlah ${p.name}"><button type="button" data-s="plus" data-id="${i.id}" aria-label="Tambah ${p.name}">+</button></div><button type="button" class="btn-hapus" data-s="del" data-id="${i.id}"><i class="fa-solid fa-trash-can"></i><span>Hapus</span></button></div></li>`;
   }).join('');
   document.getElementById('sumTotal').textContent = rp(total(order));
@@ -151,24 +216,27 @@ function renderSummary(){
 document.getElementById('sumList').addEventListener('click', e => {
   const b = e.target.closest('[data-s]'); if(!b) return;
   const c = b.dataset.s, id = b.dataset.id;
-  if(c==='plus') cart[id] = Math.min(99, cart[id] + 1);
-  if(c==='minus') cart[id] = Math.max(1, cart[id] - 1);
+  if(c==='plus') cart[id] = Math.min(99, (parseInt(cart[id])||0) + 1);
+  if(c==='minus') cart[id] = Math.max(1, (parseInt(cart[id])||0) - 1);
   if(c==='del') delete cart[id];
   saveCart(); renderCart(); renderSummary();
 });
+
 document.getElementById('cartBtn').onclick = () => { renderCart(); cartDlg.showModal(); };
 document.getElementById('cartClose').onclick = () => cartDlg.close();
+
 cartDlg.addEventListener('click', e => {
   if(e.target===cartDlg) return cartDlg.close();
   const b = e.target.closest('[data-c]'); if(!b) return;
   const c = b.dataset.c, id = b.dataset.id;
   if(c==='close') return cartDlg.close();
   if(c==='checkout') return openOrder();
-  if(c==='plus') cart[id] = Math.min(99, cart[id] + 1);
-  if(c==='minus') cart[id] = Math.max(1, cart[id] - 1);
+  if(c==='plus') cart[id] = Math.min(99, (parseInt(cart[id])||0) + 1);
+  if(c==='minus') cart[id] = Math.max(1, (parseInt(cart[id])||0) - 1);
   if(c==='del') delete cart[id];
   saveCart(); renderCart();
 });
+
 renderCart();
 
 document.getElementById('copy').onclick = async ev => {
