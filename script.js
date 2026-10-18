@@ -1,28 +1,15 @@
 const WA = 'https://wa.me/628111612316';
 const rp = n => 'Rp ' + n.toLocaleString('id-ID');
 const P = [
-  {id:'pakcoy', name:'Pakcoy Hidroponik', price:30000, per:'kg', unit:'kg', lbl:'Jumlah (kg)', note:'Renyah, segar, dipanen sesuai pesanan.'},
-  {id:'sweet', name:'Sweet Mint', price:10000, per:'50 gram', unit:'pak (50 g)', lbl:'Jumlah 50g', note:'Aroma manis lembut untuk teh dan minuman.'},
-  {id:'apple', name:'Apple Mint', price:15000, per:'50 gram', unit:'pak (50 g)', lbl:'Jumlah 50g', note:'Daun berbulu dengan aroma apel yang segar.'}
+  {id:'pakcoy', name:'Pakcoy Hidroponik', price:30000, per:'kg', unit:'kg', lbl:'Jumlah (kg)', note:'Renyah, segar, dipanen sesuai pesanan.', img:'https://raw.githubusercontent.com/dexxiittt/Image/main/Pokcoy.png'},
+  {id:'sweet', name:'Sweet Mint', price:10000, per:'50 gram', unit:'pak (50 g)', lbl:'Jumlah 50g', note:'Aroma manis lembut untuk teh dan minuman.', img:'https://raw.githubusercontent.com/dexxiittt/Image/main/Mint.jpg'},
+  {id:'apple', name:'Apple Mint', price:15000, per:'50 gram', unit:'pak (50 g)', lbl:'Jumlah 50g', note:'Daun berbulu dengan aroma apel yang segar.', img:'https://raw.githubusercontent.com/dexxiittt/Image/main/mint.png'}
 ];
 const qty = {pakcoy:1, sweet:1, apple:1};
 
-function art(id){
-  const bg = id==='pakcoy' ? '#eaf8df' : id==='sweet' ? '#e3f6e8' : '#f0f9d9';
-  let g = '';
-  if(id==='pakcoy'){
-    g = [-30,-15,0,15,30].map(r=>`<g transform="rotate(${r} 100 135)"><path d="M92 135c-2-40-4-62 8-86 12 24 10 46 8 86z" fill="#f4fbe8"/><path d="M80 78c-4-30 10-52 20-58 10 6 24 28 20 58-8 8-32 8-40 0z" fill="${r%2?'#3f9a3a':'#5cb84a'}"/></g>`).join('')+'<ellipse cx="100" cy="138" rx="34" ry="6" fill="#1d4a2c" opacity=".25"/>';
-  } else {
-    const c = id==='sweet' ? '#3f9a3a' : '#7ccf4f';
-    const leaf = (x,y,r,s)=>`<ellipse transform="rotate(${r} ${x} ${y}) scale(1)" cx="${x}" cy="${y}" rx="${14*s}" ry="${24*s}" fill="${c}"/><path d="M${x} ${y-22*s}V${y+20*s}" stroke="#fff" stroke-opacity=".5" stroke-width="2" transform="rotate(${r} ${x} ${y})"/>`;
-    g = `<path d="M100 140V60" stroke="#1d4a2c" stroke-width="4" stroke-linecap="round"/>`+leaf(78,100,-35,1)+leaf(122,100,35,1)+leaf(82,70,-30,.9)+leaf(118,70,30,.9)+leaf(100,40,0,.9)+'<ellipse cx="100" cy="142" rx="26" ry="5" fill="#1d4a2c" opacity=".25"/>';
-  }
-  return `<svg viewBox="0 0 200 150" class="w-full" style="background:${bg};display:block" role="img" aria-label="Ilustrasi ${id}">${g}</svg>`;
-}
-
 document.getElementById('grid').innerHTML = P.map(p => `
-  <article class="card flex flex-col">
-    ${art(p.id)}
+  <article class="card flex flex-col overflow-hidden">
+    <img src="${p.img}" alt="${p.name}" style="width:100%;height:180px;object-fit:cover;display:block">
     <div class="flex flex-1 flex-col gap-3 p-5">
       <div>
         <h3 class="text-xl font-extrabold">${p.name}</h3>
