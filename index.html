@@ -92,7 +92,12 @@
     </div>
     <div>
       <h3 class="font-extrabold">Metode pembayaran</h3>
-      <div class="mt-3 flex flex-wrap gap-2" style="color:var(--ink)"><span class="chip">📱 QRIS</span><span class="chip">🏦 Transfer Bank</span><span class="chip">💙 DANA</span><span class="chip">💚 GoPay</span></div>
+      <div class="mt-3 flex flex-wrap gap-2" style="color:var(--ink)">
+  <span class="chip"><img src="components/assets/payment/qris.svg" alt="QRIS" class="h-5 w-auto object-contain"> QRIS</span>
+  <span class="chip">🏦 Transfer Bank</span>
+  <span class="chip"><img src="components/assets/payment/dana.svg" alt="DANA" class="h-5 w-auto object-contain"> DANA</span>
+  <span class="chip"><img src="components/assets/payment/gopay.svg" alt="GoPay" class="h-5 w-auto object-contain"> GoPay</span>
+      </div>
     </div>
   </div>
   <p class="border-t px-4 py-4 text-center text-sm opacity-70" style="border-color:#ffffff22">© 2026 AMZ Farm. Semua hak dilindungi.</p>
@@ -135,10 +140,10 @@
       <fieldset>
         <legend class="text-sm font-semibold">Metode pembayaran</legend>
         <div class="mt-2 grid grid-cols-2 gap-2">
-          <label class="pay"><input type="radio" name="bayar" value="QRIS" checked>📱 QRIS</label>
-          <label class="pay"><input type="radio" name="bayar" value="Transfer Bank">🏦 Transfer Bank</label>
-          <label class="pay"><input type="radio" name="bayar" value="DANA">💙 DANA</label>
-          <label class="pay"><input type="radio" name="bayar" value="GoPay">💚 GoPay</label>
+  <label class="pay"><input type="radio" name="bayar" value="QRIS" checked><img src="components/assets/payment/qris.svg" alt="QRIS" class="h-5 w-auto object-contain"> QRIS</label>
+  <label class="pay"><input type="radio" name="bayar" value="Transfer Bank">🏦 Transfer Bank</label>
+  <label class="pay"><input type="radio" name="bayar" value="DANA"><img src="components/assets/payment/dana.svg" alt="DANA" class="h-5 w-auto object-contain"> DANA</label>
+  <label class="pay"><input type="radio" name="bayar" value="GoPay"><img src="components/assets/payment/gopay.svg" alt="GoPay" class="h-5 w-auto object-contain"> GoPay</label>
         </div>
       </fieldset>
       <button class="btn w-full" type="submit">Konfirmasi pesanan</button>
