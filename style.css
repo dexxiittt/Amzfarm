@@ -60,12 +60,6 @@ h1, h2, h3, .brand {
   letter-spacing: -0.02em;
 }
 
-.hero-img {
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  object-fit: contain; /* Gunakan 'contain' agar gambar tidak terpotong */
-}
-
 body::before {
   content: "";
   position: fixed;
