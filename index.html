@@ -35,13 +35,9 @@
           <a href="#tentang" class="btn alt">Kenali kami</a>
         </div>
       </div>
-      <div class="card p-6" style="background:var(--leaf-soft)">
-        <svg viewBox="0 0 400 300" class="w-full" role="img" aria-label="Ilustrasi sarang berisi daun hijau segar">
-          <g fill="#7ccf4f"><path d="M200 190C150 180 120 120 130 60c50 10 90 50 70 130z"/><path d="M200 190c50-10 80-70 70-130-50 10-90 50-70 130z" fill="#9be070"/><path d="M200 195c-8-50 0-100 0-140 22 40 22 100 0 140z" fill="#3f9a3a"/><path d="M150 200C100 205 60 170 50 130c45-5 85 20 100 70z" fill="#5cb84a"/><path d="M250 200c50 5 90-30 100-70-45-5-85 20-100 70z" fill="#5cb84a"/></g>
-          <ellipse cx="200" cy="230" rx="140" ry="48" fill="#1d4a2c"/>
-          <ellipse cx="200" cy="218" rx="120" ry="34" fill="#2f6b3f"/>
-          <g fill="none" stroke="#7ccf4f" stroke-width="3" stroke-linecap="round" opacity=".7"><path d="M105 232c40 22 150 22 190 0"/><path d="M120 216c30 14 130 14 160 0"/><path d="M95 224c-6-8 0-16 10-18"/></g>
-        </svg>
+      <!-- Gambar Hero Utama -->
+      <div class="card overflow-hidden">
+        <img src="https://raw.githubusercontent.com/dexxiittt/Image/main/iupage.jpg" alt="AMZ Farm Hidroponik" class="h-80 w-full object-cover sm:h-[400px]">
       </div>
     </div>
   </section>
@@ -155,7 +151,7 @@
       <label class="block"><span class="text-sm font-semibold">Nama</span><input class="field mt-1" name="nama" required autocomplete="name"></label>
       <label class="block"><span class="text-sm font-semibold">Nomor WhatsApp</span><input class="field mt-1" name="wa" type="tel" inputmode="tel" required pattern="[0-9+\s\-]{9,16}" placeholder="0812xxxxxxxx" autocomplete="tel"></label>
       <label class="block"><span class="text-sm font-semibold">Alamat pengiriman</span><textarea class="field mt-1" name="alamat" rows="3" required autocomplete="street-address"></textarea></label>
-            <fieldset>
+      <fieldset>
         <legend class="text-sm font-semibold">Metode pembayaran</legend>
         <div class="mt-2 grid grid-cols-2 gap-2">
           <label class="pay"><input type="radio" name="bayar" value="QRIS" checked><img src="components/assets/payment/qris.svg" alt="QRIS"> QRIS</label>
@@ -163,7 +159,7 @@
           <label class="pay"><input type="radio" name="bayar" value="DANA"><img src="components/assets/payment/dana.svg" alt="DANA"> DANA</label>
           <label class="pay"><input type="radio" name="bayar" value="GoPay"><img src="components/assets/payment/gopay.svg" alt="GoPay"> GoPay</label>
         </div>
-            </fieldset>
+      </fieldset>
       <button class="btn w-full" type="submit">Konfirmasi pesanan</button>
     </form>
   </div>
