@@ -126,7 +126,7 @@ dialog[open]{animation:pop .25s ease-out}
       <h3 class="font-extrabold">Alamat</h3>
       <p class="mt-2 opacity-80">Perumnas Blok F, Kecamatan Teluk Jambe Timur, Desa Sukaluyu, Karawang Barat.</p>
       <h3 class="mt-4 font-extrabold">WhatsApp</h3>
-      <a class="mt-1 inline-block underline" href="https://kirimwa.id/amzfarm1" target="_blank" rel="noopener">kirimwa.id/amzfarm1</a>
+      <a class="mt-1 inline-block underline" href="https://wa.me/628111612316" target="_blank" rel="noopener">08111612316</a>
     </div>
     <div>
       <h3 class="font-extrabold">Metode pembayaran</h3>
@@ -136,7 +136,7 @@ dialog[open]{animation:pop .25s ease-out}
   <p class="border-t px-4 py-4 text-center text-sm opacity-70" style="border-color:#ffffff22">© 2026 AMZ Farm. Semua hak dilindungi.</p>
 </footer>
 
-<a class="wa" href="https://kirimwa.id/amzfarm1" target="_blank" rel="noopener" aria-label="Chat WhatsApp AMZ Farm">
+<a class="wa" href="https://wa.me/628111612316" target="_blank" rel="noopener" aria-label="Chat WhatsApp AMZ Farm">
   <svg width="30" height="30" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.2 14.2c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.2-4.5-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .6l-.4.6c-.1.2-.3.3-.1.6.2.3.8 1.300 1.700 2.100 1.200 1 2.100 1.300 2.400 1.500.3.1.4.1.6-.1l.8-1c.2-.3.4-.2.6-.1l1.900.9c.3.1.5.2.5.4.1.2.1.8-.1 1.400z"/></svg>
 </a>
 
@@ -196,7 +196,7 @@ dialog[open]{animation:pop .25s ease-out}
 </div></section>
 
 <script>
-const WA = 'https://kirimwa.id/amzfarm1';
+const WA = 'https://wa.me/628111612316';
 const rp = n => 'Rp ' + n.toLocaleString('id-ID');
 const P = [
   {id:'pakcoy', name:'Pakcoy Hidroponik', price:30000, per:'kg', unit:'kg', lbl:'Jumlah (kg)', note:'Renyah, segar, dipanen sesuai pesanan.'},
@@ -277,24 +277,48 @@ document.querySelectorAll('header.top a[href^="#"]').forEach(a => a.addEventList
 form.addEventListener('submit', e => {
   e.preventDefault();
   const f = new FormData(form);
-  const text = [
-    'Halo AMZ Farm, saya ingin memesan:',
-    ...order.map(i => { const p = P.find(x => x.id===i.id); return `- ${p.name}: ${i.n} ${p.unit} (${rp(p.price*i.n)})`; }),
-    '',
-    `Total: ${rp(total(order))}`,
-    `Pembayaran: ${f.get('bayar')}`,
-    '',
-    `Nama: ${f.get('nama')}`,
-    `WhatsApp: ${f.get('wa')}`,
-    `Alamat: ${f.get('alamat')}`
-  ].join('\n');
+
+  // Susun nama item secara natural (misal: 2 pokcoy dan 1 sweet mint)
+  const itemsText = order.map(i => {
+    const p = P.find(x => x.id === i.id);
+    let name = p ? p.name : i.id;
+    if (i.id === 'pakcoy') name = 'pokcoy';
+    else name = name.toLowerCase();
+    return `${i.n} ${name}`;
+  });
+
+  let daftarPesanan = '';
+  if (itemsText.length === 1) {
+    daftarPesanan = itemsText[0];
+  } else if (itemsText.length === 2) {
+    daftarPesanan = itemsText.join(' dan ');
+  } else if (itemsText.length > 2) {
+    daftarPesanan = itemsText.slice(0, -1).join(', ') + ', dan ' + itemsText[itemsText.length - 1];
+  }
+
+  let text = `Halo kak, pesan ${daftarPesanan}`;
+
+  const nama = f.get('nama');
+  const alamat = f.get('alamat');
+  const bayar = f.get('bayar');
+  if (nama || alamat) {
+    text += `\n\nDetail Pemesan:\nNama: ${nama}\nAlamat: ${alamat}\nPembayaran: ${bayar}`;
+  }
+
+  const waUrl = `${WA}?text=${encodeURIComponent(text)}`;
+
   document.getElementById('msg').textContent = text;
-  document.getElementById('waGo').href = WA + '?text=' + encodeURIComponent(text);
+  document.getElementById('waGo').href = waUrl;
   document.getElementById('formView').classList.add('hidden');
   document.getElementById('okView').classList.remove('hidden');
+
+  // Beralih langsung ke WhatsApp penjual
+  window.open(waUrl, '_blank');
+
   form.reset();
   if(fromCart){ cart = {}; saveCart(); renderCart(); }
 });
+
 const cartDlg = document.getElementById('cartDlg');
 let cart = {};
 try { cart = JSON.parse(localStorage.getItem('amz-cart') || '{}') || {}; } catch(_) { cart = {}; }
@@ -363,4 +387,4 @@ document.getElementById('copy').onclick = async ev => {
 };
 </script>
 </body>
-  </html>
+</html>
