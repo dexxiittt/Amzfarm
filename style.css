@@ -327,6 +327,61 @@ textarea.field { min-height: 100px; resize: vertical; }
 
 #okView pre { white-space: pre-wrap; overflow-wrap: anywhere; }
 
+/* =========================================================
+   ELEGAN BADGE BUTTONS (Kembali Belanja & Hapus)
+   ========================================================= */
+
+/* Badge Tombol "Kembali Belanja" */
+.btn-back, #close {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border: 1px solid rgba(166, 232, 110, 0.25);
+  border-radius: 99px;
+  background: rgba(166, 232, 110, 0.08);
+  color: var(--calm) !important;
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-decoration: none !important;
+  transition: all var(--transition);
+  cursor: pointer;
+}
+
+.btn-back:hover, #close:hover {
+  background: rgba(166, 232, 110, 0.18);
+  border-color: var(--leaf);
+  color: var(--leaf-hover) !important;
+  transform: translateX(-3px);
+  box-shadow: 0 4px 14px rgba(166, 232, 110, 0.15);
+}
+
+/* Badge Tombol "Hapus" */
+.btn-remove, .cart-delete-btn, .btn-hapus {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border: 1px solid rgba(255, 140, 131, 0.25);
+  border-radius: 99px;
+  background: rgba(255, 140, 131, 0.08);
+  color: var(--danger) !important;
+  font-size: 0.78rem;
+  font-weight: 600;
+  line-height: 1.2;
+  text-decoration: none !important;
+  transition: all var(--transition);
+  cursor: pointer;
+}
+
+.btn-remove:hover, .cart-delete-btn:hover, .btn-hapus:hover {
+  background: rgba(255, 140, 131, 0.22);
+  border-color: var(--danger);
+  color: #ffa199 !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255, 140, 131, 0.18);
+}
+
 /* 13. RESPONSIVE — TABLET */
 @media (max-width: 900px) {
   :root { --page-width: 100%; }
