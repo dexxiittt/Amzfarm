@@ -208,14 +208,34 @@ footer#kontak .border-t { border-color: var(--line) !important; color: #809184; 
   color: #dbe9d9; transition: transform var(--transition), background var(--transition), color var(--transition), border-color var(--transition);
 }
 .social-btn:hover { transform: translateY(-3px); border-color: var(--leaf); background: var(--leaf); color: var(--on-leaf); }
+
 .pay-chip {
-  display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 38px;
-  padding: 7px 12px; border: 1px solid rgba(255, 255, 255, .1); border-radius: 12px;
-  background: rgba(255, 255, 255, .055); color: #dce9db; font-size: .83rem; font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 38px;
+  padding: 7px 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: #ffffff;
+  color: #26352a;
+  font-size: .83rem;
+  font-weight: 600;
   transition: background var(--transition), border-color var(--transition);
 }
-.pay-chip:hover { background: rgba(255, 255, 255, .09); border-color: rgba(166, 232, 110, .22); }
-.pay-chip img { display: block; width: auto; height: 18px; object-fit: contain; }
+
+.pay-chip:hover {
+  background: #f3f7f0;
+  border-color: #cbdcc5;
+}
+
+.pay-chip img {
+  display: block;
+  width: auto;
+  height: 18px;
+  object-fit: contain;
+}
 
 /* 10. FLOATING WHATSAPP & TOAST */
 .wa {
