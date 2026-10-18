@@ -1,9 +1,9 @@
 const WA = 'https://wa.me/628111612316';
 const rp = n => 'Rp ' + n.toLocaleString('id-ID');
 const P = [
-  {id:'pakcoy', name:'Pakcoy Hidroponik', price:30000, per:'kg', unit:'kg', lbl:'Jumlah (kg)', note:'Renyah, segar, dipanen sesuai pesanan.', img:'https://raw.githubusercontent.com/dexxiittt/Image/main/Pokcoy.png'},
-  {id:'sweet', name:'Sweet Mint', price:10000, per:'50 gram', unit:'pak (50 g)', lbl:'Jumlah 50g', note:'Aroma manis lembut untuk teh dan minuman.', img:'https://raw.githubusercontent.com/dexxiittt/Image/main/Mint.jpg'},
-  {id:'apple', name:'Apple Mint', price:15000, per:'50 gram', unit:'pak (50 g)', lbl:'Jumlah 50g', note:'Daun berbulu dengan aroma apel yang segar.', img:'https://raw.githubusercontent.com/dexxiittt/Image/main/mint.png'}
+  {id:'pakcoy', name:'Pakcoy Hidroponik', price:30000, per:'kg', unit:'kg', lbl:'Jumlah (kg)', note:'Renyah, segar, dipanen sesuai pesanan.', img:'https://raw.githubusercontent.com/dexxiittt/Image/main/Pokcoy.jpg'},
+  {id:'sweet', name:'Sweet Mint', price:10000, per:'50 gram', unit:'pak (50 g)', lbl:'Jumlah 50g', note:'Aroma manis lembut untuk teh dan minuman.', img:'https://raw.githubusercontent.com/dexxiittt/Image/main/Sweet%20mint.jpg'},
+  {id:'apple', name:'Apple Mint', price:15000, per:'50 gram', unit:'pak (50 g)', lbl:'Jumlah 50g', note:'Daun berbulu dengan aroma apel yang segar.', img:'https://raw.githubusercontent.com/dexxiittt/Image/main/Apple%20mint.jpg'}
 ];
 const qty = {pakcoy:1, sweet:1, apple:1};
 
