@@ -208,14 +208,34 @@ footer#kontak .border-t { border-color: var(--line) !important; color: #809184; 
   color: #dbe9d9; transition: transform var(--transition), background var(--transition), color var(--transition), border-color var(--transition);
 }
 .social-btn:hover { transform: translateY(-3px); border-color: var(--leaf); background: var(--leaf); color: var(--on-leaf); }
+
 .pay-chip {
-  display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 38px;
-  padding: 7px 12px; border: 1px solid rgba(255, 255, 255, .1); border-radius: 12px;
-  background: rgba(255, 255, 255, .055); color: #dce9db; font-size: .83rem; font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 38px;
+  padding: 7px 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: #ffffff;
+  color: #26352a;
+  font-size: .83rem;
+  font-weight: 600;
   transition: background var(--transition), border-color var(--transition);
 }
-.pay-chip:hover { background: rgba(255, 255, 255, .09); border-color: rgba(166, 232, 110, .22); }
-.pay-chip img { display: block; width: auto; height: 18px; object-fit: contain; }
+
+.pay-chip:hover {
+  background: #f3f7f0;
+  border-color: #cbdcc5;
+}
+
+.pay-chip img {
+  display: block;
+  width: auto;
+  height: 18px;
+  object-fit: contain;
+}
 
 /* 10. FLOATING WHATSAPP & TOAST */
 .wa {
@@ -266,12 +286,27 @@ dialog #cartClose { width: 38px; height: 38px; border: 1px solid var(--line); bo
 textarea.field { min-height: 100px; resize: vertical; }
 #checkoutPage .rounded-2xl[aria-live="polite"], #msg { border: 1px solid var(--line); border-radius: 16px !important; background: #0d1a12 !important; color: #dbe9dc; }
 .pay {
-  display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 11px 12px;
-  border: 1px solid var(--line-strong); border-radius: 13px; background: rgba(255, 255, 255, .025);
-  color: #dce9db !important; font-size: .9rem; font-weight: 600; cursor: pointer;
-  transition: border-color var(--transition), background var(--transition), box-shadow var(--transition);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 11px 12px;
+  border: 1px solid #e1e7df;
+  border-radius: 13px;
+  background: #ffffff;
+  color: #26352a !important;
+  font-size: .9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--transition),
+              border-color var(--transition),
+              box-shadow var(--transition);
 }
-.pay:hover { background: rgba(255, 255, 255, .055); }
+
+.pay:hover {
+  background: #f5f8f2;
+}
+
 .pay:has(input:checked) { border-color: rgba(166, 232, 110, .65); background: rgba(166, 232, 110, .09); box-shadow: inset 0 0 0 1px rgba(166, 232, 110, .12); }
 .pay input { accent-color: var(--leaf); flex: 0 0 auto; }
 .pay img { display: block; width: auto; height: 20px; object-fit: contain; }
