@@ -1,1 +1,284 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AMZ Farm – Sayuran Hidroponik Segar Karawang</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com/3.4.17"></script>
+<style>
+:root{--calm:#3d8b68;--leaf:#7ccf4f;--leaf-soft:#eaf8df;--forest:#1d4a2c;--ink:#16301f;--muted:#547061;--bg:#ffffff;--card:#ffffff;--line:#dcebd2;--on-leaf:#12301a;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--calm:#9ad9b8;--leaf:#8ddb5f;--leaf-soft:#1b2e20;--forest:#0f2417;--ink:#eaf5e4;--muted:#a3bdaa;--bg:#0f1b13;--card:#162419;--line:#26402c;--on-leaf:#0f2417}}
+:root[data-theme="dark"]{--calm:#9ad9b8;--leaf:#8ddb5f;--leaf-soft:#1b2e20;--forest:#0f2417;--ink:#eaf5e4;--muted:#a3bdaa;--bg:#0f1b13;--card:#162419;--line:#26402c;--on-leaf:#0f2417}
+html{scroll-behavior:smooth;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 70px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Figtree,system-ui,sans-serif;line-height:1.6}
+h1,h2,h3,.brand{font-family:'Bricolage Grotesque',Figtree,system-ui,sans-serif;letter-spacing:-.02em}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:30}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,label:focus-within{outline:3px solid var(--leaf);outline-offset:2px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;border-radius:999px;padding:.7rem 1.4rem;font-weight:600;background:var(--leaf);color:var(--on-leaf);border:0;cursor:pointer;transition:transform .15s,background .15s}
+.btn:hover{background:var(--forest);color:#fff}.btn:active{transform:scale(.97)}
+.btn.alt{background:transparent;border:2px solid var(--forest);color:var(--forest)}
+.btn.alt:hover{background:var(--forest);color:#fff}
+.card{background:var(--card);border:1px solid var(--line);border-radius:1.5rem;overflow:hidden}
+.stepper{display:inline-flex;align-items:center;border:2px solid var(--line);border-radius:999px;overflow:hidden}
+.stepper button{width:2.6rem;height:2.6rem;font-size:1.3rem;font-weight:600;background:var(--leaf-soft);color:var(--ink);border:0;cursor:pointer}
+.stepper button:hover{background:var(--leaf)}
+.stepper input{width:3rem;text-align:center;border:0;background:transparent;color:var(--ink);font-weight:600;font-size:1rem;-moz-appearance:textfield}
+.stepper input::-webkit-inner-spin-button{display:none}
+.field{width:100%;border:2px solid var(--line);border-radius:.9rem;padding:.65rem .9rem;background:var(--bg);color:var(--ink);font:inherit}
+.field:focus{border-color:var(--leaf);outline:none}
+.pay{display:flex;align-items:center;gap:.5rem;border:2px solid var(--line);border-radius:.9rem;padding:.6rem .8rem;cursor:pointer;font-weight:500;background:var(--card)}
+.pay:has(input:checked){border-color:var(--leaf);background:var(--leaf-soft)}
+.pay input{accent-color:var(--forest)}
+dialog{border:0;border-radius:1.5rem;padding:0;width:min(560px,94vw);max-height:92vh;background:var(--card);color:var(--ink);overflow:auto}
+dialog::backdrop{background:rgba(10,30,15,.55)}
+dialog[open]{animation:pop .25s ease-out}
+@keyframes pop{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.chip{display:inline-flex;gap:.4rem;align-items:center;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:.3rem .8rem;font-size:.9rem;font-weight:500}
+.hero-bg{background:radial-gradient(900px 420px at 85% 0%,var(--leaf-soft),transparent 70%)}
+.wa{position:fixed;right:1rem;bottom:calc(1rem + env(safe-area-inset-bottom,0px));z-index:25;width:3.6rem;height:3.6rem;border-radius:50%;background:#25d366;display:grid;place-items:center;box-shadow:0 8px 20px rgba(0,0,0,.25)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
 
+<header class="top">
+  <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
+    <a href="#atas" class="brand flex items-center gap-2 rounded-full py-1.5 pl-3 pr-4 text-xl font-extrabold" style="background:#1d4a2c;color:#c4f79a">
+      <svg width="30" height="30" viewBox="0 0 40 40" aria-hidden="true"><ellipse cx="20" cy="29" rx="16" ry="7" fill="#4a9a5e"/><path d="M20 26C10 24 8 12 8 8c8 0 14 4 12 18z" fill="#7ccf4f"/><path d="M20 26c10-2 12-14 12-18-8 0-14 4-12 18z" fill="#9be070"/></svg>
+      AMZ Farm
+    </a>
+    <nav class="flex gap-4 text-sm font-semibold sm:gap-7 sm:text-base" aria-label="Navigasi utama">
+      <a href="#tentang">Tentang</a><a href="#produk">Produk</a><a href="#kontak">Kontak</a>
+    </nav>
+  </div>
+</header>
+
+<main id="atas">
+  <section class="hero-bg">
+    <div class="mx-auto grid max-w-6xl items-center gap-8 px-4 py-12 md:grid-cols-2 md:py-20">
+      <div>
+        <p class="chip">Hidroponik · Karawang</p>
+        <h1 class="mt-4 text-4xl font-extrabold leading-tight sm:text-5xl lg:text-6xl" style="color:var(--calm)">Fresh from the nest</h1>
+        <p class="mt-4 max-w-md text-lg" style="color:var(--muted)">Selamat datang di AMZ Farm. Pakcoy dan mint yang dipanen dari kebun hidroponik kami, lalu langsung diantar ke dapur Anda.</p>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a href="#produk" class="btn">Lihat produk</a>
+          <a href="#tentang" class="btn alt">Kenali kami</a>
+        </div>
+      </div>
+      <div class="card p-6" style="background:var(--leaf-soft)">
+        <svg viewBox="0 0 400 300" class="w-full" role="img" aria-label="Ilustrasi sarang berisi daun hijau segar">
+          <g fill="#7ccf4f"><path d="M200 190C150 180 120 120 130 60c50 10 90 50 70 130z"/><path d="M200 190c50-10 80-70 70-130-50 10-90 50-70 130z" fill="#9be070"/><path d="M200 195c-8-50 0-100 0-140 22 40 22 100 0 140z" fill="#3f9a3a"/><path d="M150 200C100 205 60 170 50 130c45-5 85 20 100 70z" fill="#5cb84a"/><path d="M250 200c50 5 90-30 100-70-45-5-85 20-100 70z" fill="#5cb84a"/></g>
+          <ellipse cx="200" cy="230" rx="140" ry="48" fill="#1d4a2c"/>
+          <ellipse cx="200" cy="218" rx="120" ry="34" fill="#2f6b3f"/>
+          <g fill="none" stroke="#7ccf4f" stroke-width="3" stroke-linecap="round" opacity=".7"><path d="M105 232c40 22 150 22 190 0"/><path d="M120 216c30 14 130 14 160 0"/><path d="M95 224c-6-8 0-16 10-18"/></g>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <section id="tentang" class="mx-auto max-w-6xl px-4 py-14">
+    <div class="grid gap-8 md:grid-cols-5">
+      <div class="md:col-span-2">
+        <h2 class="text-3xl font-extrabold" style="color:var(--calm)">Tentang AMZ Farm</h2>
+        <p class="mt-3" style="color:var(--muted)">AMZ Farm adalah usaha mikro di Karawang yang menanam dan menjual sayuran hidroponik. Tanpa tanah, hemat air, dan dipanen saat dipesan supaya sampai dalam kondisi paling segar.</p>
+      </div>
+      <div class="grid gap-4 md:col-span-3">
+        <div class="card p-6">
+          <h3 class="text-xl font-extrabold">Visi</h3>
+          <p class="mt-2" style="color:var(--muted)">Menjadi penyedia sayuran hidroponik segar, sehat, dan berkualitas tinggi yang utama di Karawang dan sekitarnya, serta mendukung gaya hidup sehat dan berkelanjutan.</p>
+        </div>
+        <div class="card p-6">
+          <h3 class="text-xl font-extrabold">Misi</h3>
+          <ol class="mt-3 list-decimal space-y-2 pl-5" style="color:var(--muted)">
+            <li>Menyediakan produk pertanian paling segar langsung ke tangan konsumen, sejalan dengan slogan “Fresh from the nest”.</li>
+            <li>Menerapkan metode tanam hidroponik modern yang efisien dan ramah lingkungan.</li>
+            <li>Memberikan pelayanan pelanggan yang praktis, cepat, dan terpercaya melalui platform digital.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="produk" class="py-14" style="background:var(--leaf-soft)">
+    <div class="mx-auto max-w-6xl px-4">
+      <h2 class="text-3xl font-extrabold" style="color:var(--calm)">Produk segar kami</h2>
+      <p class="mt-2" style="color:var(--muted)">Atur jumlah, lalu tekan “Beli sekarang”.</p>
+      <div id="grid" class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"></div>
+    </div>
+  </section>
+</main>
+
+<footer id="kontak" style="background:var(--forest);color:#e7f5de">
+  <div class="mx-auto grid max-w-6xl gap-8 px-4 py-12 md:grid-cols-3">
+    <div>
+      <p class="brand text-2xl font-extrabold" style="color:#c4f79a">AMZ Farm</p>
+      <p class="mt-2 opacity-80">“Fresh from the nest”</p>
+    </div>
+    <div>
+      <h3 class="font-extrabold">Alamat</h3>
+      <p class="mt-2 opacity-80">Perumnas Blok F, Kecamatan Teluk Jambe Timur, Desa Sukaluyu, Karawang Barat.</p>
+      <h3 class="mt-4 font-extrabold">WhatsApp</h3>
+      <a class="mt-1 inline-block underline" href="https://kirimwa.id/amzfarm1" target="_blank" rel="noopener">kirimwa.id/amzfarm1</a>
+    </div>
+    <div>
+      <h3 class="font-extrabold">Metode pembayaran</h3>
+      <div class="mt-3 flex flex-wrap gap-2" style="color:var(--ink)"><span class="chip">📱 QRIS</span><span class="chip">🏦 Transfer Bank</span><span class="chip">💙 DANA</span><span class="chip">💚 GoPay</span></div>
+    </div>
+  </div>
+  <p class="border-t px-4 py-4 text-center text-sm opacity-70" style="border-color:#ffffff22">© 2026 AMZ Farm. Semua hak dilindungi.</p>
+</footer>
+
+<a class="wa" href="https://kirimwa.id/amzfarm1" target="_blank" rel="noopener" aria-label="Chat WhatsApp AMZ Farm">
+  <svg width="30" height="30" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.2 14.2c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.2-4.5-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .6l-.4.6c-.1.2-.3.3-.1.6.2.3.8 1.300 1.700 2.100 1.200 1 2.100 1.300 2.400 1.500.3.1.4.1.6-.1l.8-1c.2-.3.4-.2.6-.1l1.900.9c.3.1.5.2.5.4.1.2.1.8-.1 1.400z"/></svg>
+</a>
+
+<dialog id="dlg" aria-labelledby="dlgTitle">
+  <div id="formView" class="p-6">
+    <div class="flex items-start justify-between gap-4">
+      <h2 id="dlgTitle" class="text-2xl font-extrabold" style="color:var(--forest)">Form pembelian</h2>
+      <button type="button" id="close" class="text-2xl leading-none" aria-label="Tutup" style="color:var(--muted)">×</button>
+    </div>
+    <div class="mt-4 rounded-2xl p-4" style="background:var(--leaf-soft)" aria-live="polite">
+      <p class="text-sm" style="color:var(--muted)">Ringkasan pesanan</p>
+      <p id="sumName" class="text-lg font-extrabold"></p>
+      <div class="mt-1 flex items-center justify-between">
+        <span id="sumQty"></span>
+        <span id="sumTotal" class="font-extrabold"></span>
+      </div>
+    </div>
+    <form id="form" class="mt-5 space-y-4">
+      <label class="block"><span class="text-sm font-semibold">Nama</span><input class="field mt-1" name="nama" required autocomplete="name"></label>
+      <label class="block"><span class="text-sm font-semibold">Nomor WhatsApp</span><input class="field mt-1" name="wa" type="tel" inputmode="tel" required pattern="[0-9+\s\-]{9,16}" placeholder="0812xxxxxxxx" autocomplete="tel"></label>
+      <label class="block"><span class="text-sm font-semibold">Alamat pengiriman</span><textarea class="field mt-1" name="alamat" rows="3" required autocomplete="street-address"></textarea></label>
+      <fieldset>
+        <legend class="text-sm font-semibold">Metode pembayaran</legend>
+        <div class="mt-2 grid grid-cols-2 gap-2">
+          <label class="pay"><input type="radio" name="bayar" value="QRIS" checked>📱 QRIS</label>
+          <label class="pay"><input type="radio" name="bayar" value="Transfer Bank">🏦 Transfer Bank</label>
+          <label class="pay"><input type="radio" name="bayar" value="DANA">💙 DANA</label>
+          <label class="pay"><input type="radio" name="bayar" value="GoPay">💚 GoPay</label>
+        </div>
+      </fieldset>
+      <button class="btn w-full" type="submit">Konfirmasi pesanan</button>
+    </form>
+  </div>
+  <div id="okView" class="hidden p-6 text-center">
+    <div class="mx-auto grid h-16 w-16 place-items-center rounded-full text-3xl" style="background:var(--leaf);color:var(--on-leaf)">✓</div>
+    <h2 class="mt-4 text-2xl font-extrabold" style="color:var(--forest)">Pesanan siap dikirim</h2>
+    <p class="mt-2" style="color:var(--muted)">Lanjutkan ke WhatsApp agar AMZ Farm dapat memproses pesanan Anda. Pesan sudah disiapkan.</p>
+    <pre id="msg" class="mt-4 whitespace-pre-wrap rounded-2xl p-4 text-left text-sm" style="background:var(--leaf-soft);font-family:inherit"></pre>
+    <div class="mt-5 flex flex-col gap-3 sm:flex-row">
+      <a id="waGo" class="btn flex-1" target="_blank" rel="noopener" href="#">Kirim lewat WhatsApp</a>
+      <button id="copy" class="btn alt flex-1" type="button">Salin pesan</button>
+    </div>
+    <button id="done" class="mt-4 underline" type="button" style="color:var(--muted)">Tutup</button>
+  </div>
+</dialog>
+
+<script>
+const WA = 'https://kirimwa.id/amzfarm1';
+const rp = n => 'Rp ' + n.toLocaleString('id-ID');
+const P = [
+  {id:'pakcoy', name:'Pakcoy Hidroponik', price:30000, per:'kg', unit:'kg', note:'Renyah, segar, dipanen sesuai pesanan.'},
+  {id:'sweet', name:'Sweet Mint', price:10000, per:'50 gram', unit:'pak (50 g)', note:'Aroma manis lembut untuk teh dan minuman.'},
+  {id:'apple', name:'Apple Mint', price:15000, per:'50 gram', unit:'pak (50 g)', note:'Daun berbulu dengan aroma apel yang segar.'}
+];
+const qty = {pakcoy:1, sweet:1, apple:1};
+
+function art(id){
+  const bg = id==='pakcoy' ? '#eaf8df' : id==='sweet' ? '#e3f6e8' : '#f0f9d9';
+  let g = '';
+  if(id==='pakcoy'){
+    g = [-30,-15,0,15,30].map(r=>`<g transform="rotate(${r} 100 135)"><path d="M92 135c-2-40-4-62 8-86 12 24 10 46 8 86z" fill="#f4fbe8"/><path d="M80 78c-4-30 10-52 20-58 10 6 24 28 20 58-8 8-32 8-40 0z" fill="${r%2?'#3f9a3a':'#5cb84a'}"/></g>`).join('')+'<ellipse cx="100" cy="138" rx="34" ry="6" fill="#1d4a2c" opacity=".25"/>';
+  } else {
+    const c = id==='sweet' ? '#3f9a3a' : '#7ccf4f';
+    const leaf = (x,y,r,s)=>`<ellipse transform="rotate(${r} ${x} ${y}) scale(1)" cx="${x}" cy="${y}" rx="${14*s}" ry="${24*s}" fill="${c}"/><path d="M${x} ${y-22*s}V${y+20*s}" stroke="#fff" stroke-opacity=".5" stroke-width="2" transform="rotate(${r} ${x} ${y})"/>`;
+    g = `<path d="M100 140V60" stroke="#1d4a2c" stroke-width="4" stroke-linecap="round"/>`+leaf(78,100,-35,1)+leaf(122,100,35,1)+leaf(82,70,-30,.9)+leaf(118,70,30,.9)+leaf(100,40,0,.9)+'<ellipse cx="100" cy="142" rx="26" ry="5" fill="#1d4a2c" opacity=".25"/>';
+  }
+  return `<svg viewBox="0 0 200 150" class="w-full" style="background:${bg};display:block" role="img" aria-label="Ilustrasi ${id}">${g}</svg>`;
+}
+
+document.getElementById('grid').innerHTML = P.map(p => `
+  <article class="card flex flex-col">
+    ${art(p.id)}
+    <div class="flex flex-1 flex-col gap-3 p-5">
+      <div>
+        <h3 class="text-xl font-extrabold">${p.name}</h3>
+        <p class="text-sm" style="color:var(--muted)">${p.note}</p>
+      </div>
+      <p class="text-2xl font-extrabold" style="color:var(--calm)">${rp(p.price)} <span class="text-sm font-medium" style="color:var(--muted)">/ ${p.per}</span></p>
+      <div class="mt-auto flex flex-col gap-3">
+        <div class="flex items-center justify-between gap-2">
+          <span class="text-sm font-semibold">Jumlah (${p.unit})</span>
+          <div class="stepper">
+            <button type="button" data-act="minus" data-id="${p.id}" aria-label="Kurangi jumlah ${p.name}">−</button>
+            <input id="q-${p.id}" type="number" min="1" max="99" value="1" inputmode="numeric" aria-label="Jumlah ${p.name}" data-id="${p.id}">
+            <button type="button" data-act="plus" data-id="${p.id}" aria-label="Tambah jumlah ${p.name}">+</button>
+          </div>
+        </div>
+        <button type="button" class="btn" data-act="buy" data-id="${p.id}">Beli sekarang</button>
+      </div>
+    </div>
+  </article>`).join('');
+
+const clamp = v => Math.max(1, Math.min(99, parseInt(v) || 1));
+const grid = document.getElementById('grid');
+grid.addEventListener('click', e => {
+  const b = e.target.closest('button[data-act]'); if(!b) return;
+  const id = b.dataset.id, inp = document.getElementById('q-'+id);
+  if(b.dataset.act==='minus') qty[id] = clamp(qty[id]-1);
+  if(b.dataset.act==='plus') qty[id] = clamp(qty[id]+1);
+  inp.value = qty[id];
+  if(b.dataset.act==='buy') openOrder(id);
+});
+grid.addEventListener('change', e => {
+  if(e.target.matches('input[data-id]')){ qty[e.target.dataset.id] = clamp(e.target.value); e.target.value = qty[e.target.dataset.id]; }
+});
+
+const dlg = document.getElementById('dlg'), form = document.getElementById('form');
+let cur = null;
+function openOrder(id){
+  cur = P.find(p => p.id===id);
+  const n = qty[id];
+  document.getElementById('sumName').textContent = cur.name;
+  document.getElementById('sumQty').textContent = `${n} × ${cur.unit} @ ${rp(cur.price)}`;
+  document.getElementById('sumTotal').textContent = rp(cur.price*n);
+  document.getElementById('formView').classList.remove('hidden');
+  document.getElementById('okView').classList.add('hidden');
+  dlg.showModal();
+}
+document.getElementById('close').onclick = () => dlg.close();
+document.getElementById('done').onclick = () => dlg.close();
+dlg.addEventListener('click', e => { if(e.target===dlg) dlg.close(); });
+
+form.addEventListener('submit', e => {
+  e.preventDefault();
+  const f = new FormData(form), n = qty[cur.id];
+  const text = [
+    'Halo AMZ Farm, saya ingin memesan:',
+    `Produk: ${cur.name}`,
+    `Jumlah: ${n} ${cur.unit}`,
+    `Total: ${rp(cur.price*n)}`,
+    `Pembayaran: ${f.get('bayar')}`,
+    '',
+    `Nama: ${f.get('nama')}`,
+    `WhatsApp: ${f.get('wa')}`,
+    `Alamat: ${f.get('alamat')}`
+  ].join('\n');
+  document.getElementById('msg').textContent = text;
+  document.getElementById('waGo').href = WA + '?text=' + encodeURIComponent(text);
+  document.getElementById('formView').classList.add('hidden');
+  document.getElementById('okView').classList.remove('hidden');
+  form.reset();
+});
+document.getElementById('copy').onclick = async ev => {
+  try { await navigator.clipboard.writeText(document.getElementById('msg').textContent); ev.target.textContent = 'Tersalin'; }
+  catch(_) { ev.target.textContent = 'Salin manual dari kotak di atas'; }
+};
+</script>
+</body>
+                                                                                                                                                                                                   </html>
