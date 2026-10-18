@@ -40,6 +40,10 @@ dialog[open]{animation:pop .25s ease-out}
 .chip{display:inline-flex;gap:.4rem;align-items:center;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:.3rem .8rem;font-size:.9rem;font-weight:500}
 .hero-bg{background:radial-gradient(900px 420px at 85% 0%,var(--leaf-soft),transparent 70%)}
 .wa{position:fixed;right:1rem;bottom:calc(1rem + env(safe-area-inset-bottom,0px));z-index:25;width:3.6rem;height:3.6rem;border-radius:50%;background:#25d366;display:grid;place-items:center;box-shadow:0 8px 20px rgba(0,0,0,.25)}
+.cartbtn{position:relative;width:2.5rem;height:2.5rem;border-radius:50%;background:var(--leaf-soft);border:1px solid var(--line);font-size:1.15rem;cursor:pointer}
+.badge{position:absolute;top:-.3rem;right:-.3rem;min-width:1.2rem;height:1.2rem;padding:0 .25rem;border-radius:999px;background:#1d4a2c;color:#c4f79a;font-size:.72rem;font-weight:700;display:none;place-items:center}
+.toast{position:fixed;left:50%;bottom:calc(1.2rem + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);opacity:0;pointer-events:none;background:#1d4a2c;color:#c4f79a;padding:.6rem 1.1rem;border-radius:999px;font-weight:600;z-index:40;transition:opacity .2s,transform .2s;max-width:90vw;text-align:center}
+.toast.show{opacity:1;transform:translate(-50%,0)}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 </style>
 </head>
@@ -52,7 +56,7 @@ dialog[open]{animation:pop .25s ease-out}
       AMZ Farm
     </a>
     <nav class="flex gap-4 text-sm font-semibold sm:gap-7 sm:text-base" aria-label="Navigasi utama">
-      <a href="#tentang">Tentang</a><a href="#produk">Produk</a><a href="#kontak">Kontak</a>
+      <a class="hidden sm:inline" href="#tentang">Tentang</a><a href="#produk">Produk</a><a class="hidden sm:inline" href="#kontak">Kontak</a><button type="button" id="cartBtn" class="cartbtn self-center" aria-label="Buka keranjang">🛒<span id="cartCount" class="badge">0</span></button>
     </nav>
   </div>
 </header>
@@ -106,7 +110,7 @@ dialog[open]{animation:pop .25s ease-out}
   <section id="produk" class="py-14" style="background:var(--leaf-soft)">
     <div class="mx-auto max-w-6xl px-4">
       <h2 class="text-3xl font-extrabold" style="color:var(--calm)">Produk segar kami</h2>
-      <p class="mt-2" style="color:var(--muted)">Atur jumlah, lalu tekan “Beli sekarang”.</p>
+      <p class="mt-2" style="color:var(--muted)">Atur jumlah, lalu masukkan ke keranjang atau langsung beli.</p>
       <div id="grid" class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"></div>
     </div>
   </section>
@@ -136,17 +140,29 @@ dialog[open]{animation:pop .25s ease-out}
   <svg width="30" height="30" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.2 14.2c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.2-4.5-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .6l-.4.6c-.1.2-.3.3-.1.6.2.3.8 1.300 1.700 2.100 1.200 1 2.100 1.300 2.400 1.500.3.1.4.1.6-.1l.8-1c.2-.3.4-.2.6-.1l1.900.9c.3.1.5.2.5.4.1.2.1.8-.1 1.400z"/></svg>
 </a>
 
-<dialog id="dlg" aria-labelledby="dlgTitle">
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<dialog id="cartDlg" aria-labelledby="cartTitle">
+  <div class="p-6">
+    <div class="flex items-start justify-between gap-4">
+      <h2 id="cartTitle" class="text-2xl font-extrabold" style="color:var(--calm)">Keranjang</h2>
+      <button type="button" id="cartClose" class="text-2xl leading-none" aria-label="Tutup" style="color:var(--muted)">×</button>
+    </div>
+    <div id="cartBody" class="mt-4"></div>
+  </div>
+</dialog>
+
+<section id="checkoutPage" class="hidden mx-auto max-w-2xl px-4 py-10" aria-labelledby="dlgTitle"><div class="card">
   <div id="formView" class="p-6">
     <div class="flex items-start justify-between gap-4">
-      <h2 id="dlgTitle" class="text-2xl font-extrabold" style="color:var(--forest)">Form pembelian</h2>
-      <button type="button" id="close" class="text-2xl leading-none" aria-label="Tutup" style="color:var(--muted)">×</button>
+      <h2 id="dlgTitle" class="text-2xl font-extrabold" style="color:var(--calm)">Checkout</h2>
+      <button type="button" id="close" class="underline" style="color:var(--muted)">← Kembali belanja</button>
     </div>
     <div class="mt-4 rounded-2xl p-4" style="background:var(--leaf-soft)" aria-live="polite">
       <p class="text-sm" style="color:var(--muted)">Ringkasan pesanan</p>
-      <p id="sumName" class="text-lg font-extrabold"></p>
+      <ul id="sumList" class="mt-1 space-y-1"></ul>
       <div class="mt-1 flex items-center justify-between">
-        <span id="sumQty"></span>
+        <span class="font-extrabold">Total</span>
         <span id="sumTotal" class="font-extrabold"></span>
       </div>
     </div>
@@ -177,15 +193,15 @@ dialog[open]{animation:pop .25s ease-out}
     </div>
     <button id="done" class="mt-4 underline" type="button" style="color:var(--muted)">Tutup</button>
   </div>
-</dialog>
+</div></section>
 
 <script>
 const WA = 'https://kirimwa.id/amzfarm1';
 const rp = n => 'Rp ' + n.toLocaleString('id-ID');
 const P = [
-  {id:'pakcoy', name:'Pakcoy Hidroponik', price:30000, per:'kg', unit:'kg', note:'Renyah, segar, dipanen sesuai pesanan.'},
-  {id:'sweet', name:'Sweet Mint', price:10000, per:'50 gram', unit:'pak (50 g)', note:'Aroma manis lembut untuk teh dan minuman.'},
-  {id:'apple', name:'Apple Mint', price:15000, per:'50 gram', unit:'pak (50 g)', note:'Daun berbulu dengan aroma apel yang segar.'}
+  {id:'pakcoy', name:'Pakcoy Hidroponik', price:30000, per:'kg', unit:'kg', lbl:'Jumlah (kg)', note:'Renyah, segar, dipanen sesuai pesanan.'},
+  {id:'sweet', name:'Sweet Mint', price:10000, per:'50 gram', unit:'pak (50 g)', lbl:'Jumlah 50g', note:'Aroma manis lembut untuk teh dan minuman.'},
+  {id:'apple', name:'Apple Mint', price:15000, per:'50 gram', unit:'pak (50 g)', lbl:'Jumlah 50g', note:'Daun berbulu dengan aroma apel yang segar.'}
 ];
 const qty = {pakcoy:1, sweet:1, apple:1};
 
@@ -213,14 +229,14 @@ document.getElementById('grid').innerHTML = P.map(p => `
       <p class="text-2xl font-extrabold" style="color:var(--calm)">${rp(p.price)} <span class="text-sm font-medium" style="color:var(--muted)">/ ${p.per}</span></p>
       <div class="mt-auto flex flex-col gap-3">
         <div class="flex items-center justify-between gap-2">
-          <span class="text-sm font-semibold">Jumlah (${p.unit})</span>
+          <span class="text-sm font-semibold">${p.lbl}</span>
           <div class="stepper">
             <button type="button" data-act="minus" data-id="${p.id}" aria-label="Kurangi jumlah ${p.name}">−</button>
             <input id="q-${p.id}" type="number" min="1" max="99" value="1" inputmode="numeric" aria-label="Jumlah ${p.name}" data-id="${p.id}">
             <button type="button" data-act="plus" data-id="${p.id}" aria-label="Tambah jumlah ${p.name}">+</button>
           </div>
         </div>
-        <button type="button" class="btn" data-act="buy" data-id="${p.id}">Beli sekarang</button>
+        <div class="grid grid-cols-2 gap-2"><button type="button" class="btn alt" style="padding-inline:.5rem" data-act="add" data-id="${p.id}">+ Keranjang</button><button type="button" class="btn" style="padding-inline:.5rem" data-act="buy" data-id="${p.id}">Beli sekarang</button></div>
       </div>
     </div>
   </article>`).join('');
@@ -233,36 +249,39 @@ grid.addEventListener('click', e => {
   if(b.dataset.act==='minus') qty[id] = clamp(qty[id]-1);
   if(b.dataset.act==='plus') qty[id] = clamp(qty[id]+1);
   inp.value = qty[id];
-  if(b.dataset.act==='buy') openOrder(id);
+  if(b.dataset.act==='buy'){ addCart(id, qty[id], true); openOrder(); }
+  if(b.dataset.act==='add') addCart(id, qty[id]);
 });
 grid.addEventListener('change', e => {
   if(e.target.matches('input[data-id]')){ qty[e.target.dataset.id] = clamp(e.target.value); e.target.value = qty[e.target.dataset.id]; }
 });
 
-const dlg = document.getElementById('dlg'), form = document.getElementById('form');
-let cur = null;
-function openOrder(id){
-  cur = P.find(p => p.id===id);
-  const n = qty[id];
-  document.getElementById('sumName').textContent = cur.name;
-  document.getElementById('sumQty').textContent = `${n} × ${cur.unit} @ ${rp(cur.price)}`;
-  document.getElementById('sumTotal').textContent = rp(cur.price*n);
+const dlg = document.getElementById('checkoutPage'), form = document.getElementById('form');
+document.querySelector('footer').before(dlg);
+let order = [], fromCart = false;
+function openOrder(){
+  fromCart = true;
+  if(!Object.keys(cart).length) return toast('Keranjang masih kosong');
+  
+  renderSummary();
+  cartDlg.close();
+  
   document.getElementById('formView').classList.remove('hidden');
   document.getElementById('okView').classList.add('hidden');
-  dlg.showModal();
+  document.querySelector('main').classList.add('hidden'); dlg.classList.remove('hidden'); window.scrollTo(0, 0);
 }
-document.getElementById('close').onclick = () => dlg.close();
-document.getElementById('done').onclick = () => dlg.close();
-dlg.addEventListener('click', e => { if(e.target===dlg) dlg.close(); });
+document.getElementById('close').onclick = showShop;
+document.getElementById('done').onclick = showShop;
+document.querySelectorAll('header.top a[href^="#"]').forEach(a => a.addEventListener('click', showShop));
 
 form.addEventListener('submit', e => {
   e.preventDefault();
-  const f = new FormData(form), n = qty[cur.id];
+  const f = new FormData(form);
   const text = [
     'Halo AMZ Farm, saya ingin memesan:',
-    `Produk: ${cur.name}`,
-    `Jumlah: ${n} ${cur.unit}`,
-    `Total: ${rp(cur.price*n)}`,
+    ...order.map(i => { const p = P.find(x => x.id===i.id); return `- ${p.name}: ${i.n} ${p.unit} (${rp(p.price*i.n)})`; }),
+    '',
+    `Total: ${rp(total(order))}`,
     `Pembayaran: ${f.get('bayar')}`,
     '',
     `Nama: ${f.get('nama')}`,
@@ -274,11 +293,74 @@ form.addEventListener('submit', e => {
   document.getElementById('formView').classList.add('hidden');
   document.getElementById('okView').classList.remove('hidden');
   form.reset();
+  if(fromCart){ cart = {}; saveCart(); renderCart(); }
 });
+const cartDlg = document.getElementById('cartDlg');
+let cart = {};
+try { cart = JSON.parse(localStorage.getItem('amz-cart') || '{}') || {}; } catch(_) { cart = {}; }
+Object.keys(cart).forEach(id => { if(P.some(p => p.id===id)) cart[id] = clamp(cart[id]); else delete cart[id]; });
+const saveCart = () => { try { localStorage.setItem('amz-cart', JSON.stringify(cart)); } catch(_) {} };
+const cartItems = () => Object.keys(cart).map(id => ({id, n:cart[id]}));
+const total = items => items.reduce((s, i) => s + P.find(p => p.id===i.id).price * i.n, 0);
+let tt;
+function toast(t){ const el = document.getElementById('toast'); el.textContent = t; el.classList.add('show'); clearTimeout(tt); tt = setTimeout(() => el.classList.remove('show'), 2200); }
+function addCart(id, n, quiet){
+  cart[id] = Math.min(99, (cart[id] || 0) + n); saveCart(); renderCart();
+  qty[id] = 1; document.getElementById('q-'+id).value = 1;
+  if(!quiet) toast(P.find(p => p.id===id).name + ' masuk keranjang');
+}
+function renderCart(){
+  const ids = Object.keys(cart);
+  const badge = document.getElementById('cartCount');
+  const count = ids.reduce((s, id) => s + cart[id], 0);
+  badge.textContent = count; badge.style.display = count ? 'grid' : 'none';
+  const body = document.getElementById('cartBody');
+  if(!ids.length){
+    body.innerHTML = '<p style="color:var(--muted)">Keranjang masih kosong. Pilih produk, lalu tekan “+ Keranjang”.</p><button type="button" class="btn mt-4 w-full" data-c="close">Lihat produk</button>';
+    return;
+  }
+  body.innerHTML = ids.map(id => {
+    const p = P.find(x => x.id===id), n = cart[id];
+    return `<div class="border-b py-3" style="border-color:var(--line)"><div class="flex justify-between gap-3"><div><p class="font-extrabold">${p.name}</p><p class="text-sm" style="color:var(--muted)">${rp(p.price)} / ${p.per}</p></div><p class="font-extrabold">${rp(p.price*n)}</p></div><div class="mt-2 flex items-center justify-between"><div class="stepper"><button type="button" data-c="minus" data-id="${id}" aria-label="Kurangi ${p.name}">−</button><input value="${n}" readonly aria-label="Jumlah ${p.name}"><button type="button" data-c="plus" data-id="${id}" aria-label="Tambah ${p.name}">+</button></div><button type="button" class="text-sm underline" data-c="del" data-id="${id}" style="color:var(--muted)">Hapus</button></div></div>`;
+  }).join('') + `<div class="mt-4 flex justify-between text-lg font-extrabold"><span>Total</span><span>${rp(total(cartItems()))}</span></div><button type="button" class="btn mt-4 w-full" data-c="checkout">Checkout semua</button>`;
+}
+function showShop(){ dlg.classList.add('hidden'); document.querySelector('main').classList.remove('hidden'); window.scrollTo(0, 0); }
+function renderSummary(){
+  order = cartItems();
+  if(!order.length){ showShop(); toast('Keranjang masih kosong'); return; }
+  document.getElementById('sumList').innerHTML = order.map(i => {
+    const p = P.find(x => x.id===i.id);
+    return `<li class="border-b py-3" style="border-color:var(--line)"><div class="flex justify-between gap-3"><div><p class="font-extrabold">${p.name}</p><p class="text-sm" style="color:var(--muted)">${rp(p.price)} / ${p.per}</p></div><p class="font-extrabold">${rp(p.price*i.n)}</p></div><div class="mt-2 flex items-center justify-between"><div class="stepper"><button type="button" data-s="minus" data-id="${i.id}" aria-label="Kurangi ${p.name}">−</button><input value="${i.n}" readonly aria-label="Jumlah ${p.name}"><button type="button" data-s="plus" data-id="${i.id}" aria-label="Tambah ${p.name}">+</button></div><button type="button" class="text-sm underline" data-s="del" data-id="${i.id}" style="color:var(--muted)">Hapus</button></div></li>`;
+  }).join('');
+  document.getElementById('sumTotal').textContent = rp(total(order));
+}
+document.getElementById('sumList').addEventListener('click', e => {
+  const b = e.target.closest('[data-s]'); if(!b) return;
+  const c = b.dataset.s, id = b.dataset.id;
+  if(c==='plus') cart[id] = Math.min(99, cart[id] + 1);
+  if(c==='minus') cart[id] = Math.max(1, cart[id] - 1);
+  if(c==='del') delete cart[id];
+  saveCart(); renderCart(); renderSummary();
+});
+document.getElementById('cartBtn').onclick = () => { renderCart(); cartDlg.showModal(); };
+document.getElementById('cartClose').onclick = () => cartDlg.close();
+cartDlg.addEventListener('click', e => {
+  if(e.target===cartDlg) return cartDlg.close();
+  const b = e.target.closest('[data-c]'); if(!b) return;
+  const c = b.dataset.c, id = b.dataset.id;
+  if(c==='close') return cartDlg.close();
+  if(c==='checkout') return openOrder();
+  if(c==='plus') cart[id] = Math.min(99, cart[id] + 1);
+  if(c==='minus') cart[id] = Math.max(1, cart[id] - 1);
+  if(c==='del') delete cart[id];
+  saveCart(); renderCart();
+});
+renderCart();
+
 document.getElementById('copy').onclick = async ev => {
   try { await navigator.clipboard.writeText(document.getElementById('msg').textContent); ev.target.textContent = 'Tersalin'; }
   catch(_) { ev.target.textContent = 'Salin manual dari kotak di atas'; }
 };
 </script>
 </body>
-                                                                                                                                                                                                   </html>
+  </html>
