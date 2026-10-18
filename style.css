@@ -335,17 +335,24 @@ textarea.field { min-height: 100px; resize: vertical; }
 .btn-back, #close {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 6px 14px;
+  justify-content: center;
+  gap: 8px;
+  padding: 6px 16px;
   border: 1px solid rgba(166, 232, 110, 0.25);
   border-radius: 99px;
   background: rgba(166, 232, 110, 0.08);
   color: var(--calm) !important;
   font-size: 0.82rem;
   font-weight: 600;
+  line-height: 1;
   text-decoration: none !important;
-  transition: all var(--transition);
   cursor: pointer;
+  transition: background var(--transition), border-color var(--transition), color var(--transition), transform var(--transition), box-shadow var(--transition);
+}
+
+.btn-back i, #close i {
+  font-size: 0.85em;
+  transition: transform var(--transition);
 }
 
 .btn-back:hover, #close:hover {
@@ -356,22 +363,36 @@ textarea.field { min-height: 100px; resize: vertical; }
   box-shadow: 0 4px 14px rgba(166, 232, 110, 0.15);
 }
 
+.btn-back:hover i, #close:hover i {
+  transform: translateX(-2px); /* Ikon panah sedikit bergeser ke kiri */
+}
+
+.btn-back:active, #close:active {
+  transform: translateX(-1px) scale(0.96);
+}
+
+
 /* Badge Tombol "Hapus" */
 .btn-remove, .cart-delete-btn, .btn-hapus {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  padding: 4px 10px;
+  justify-content: center;
+  gap: 6px;
+  padding: 5px 12px;
   border: 1px solid rgba(255, 140, 131, 0.25);
   border-radius: 99px;
   background: rgba(255, 140, 131, 0.08);
   color: var(--danger) !important;
   font-size: 0.78rem;
   font-weight: 600;
-  line-height: 1.2;
+  line-height: 1;
   text-decoration: none !important;
-  transition: all var(--transition);
   cursor: pointer;
+  transition: background var(--transition), border-color var(--transition), color var(--transition), transform var(--transition), box-shadow var(--transition);
+}
+
+.btn-remove i, .cart-delete-btn i, .btn-hapus i {
+  font-size: 0.85em;
 }
 
 .btn-remove:hover, .cart-delete-btn:hover, .btn-hapus:hover {
@@ -380,6 +401,10 @@ textarea.field { min-height: 100px; resize: vertical; }
   color: #ffa199 !important;
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(255, 140, 131, 0.18);
+}
+
+.btn-remove:active, .cart-delete-btn:active, .btn-hapus:active {
+  transform: translateY(0) scale(0.95);
 }
 
 /* 13. RESPONSIVE — TABLET */
