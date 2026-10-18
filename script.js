@@ -134,19 +134,20 @@ function renderCart(){
   }
   body.innerHTML = ids.map(id => {
     const p = P.find(x => x.id===id), n = cart[id];
-    return `<div class="border-b py-3" style="border-color:var(--line)"><div class="flex justify-between gap-3"><div><p class="font-extrabold">${p.name}</p><p class="text-sm" style="color:var(--muted)">${rp(p.price)} / ${p.per}</p></div><p class="font-extrabold">${rp(p.price*n)}</p></div><div class="mt-2 flex items-center justify-between"><div class="stepper"><button type="button" data-c="minus" data-id="${id}" aria-label="Kurangi ${p.name}">−</button><input value="${n}" readonly aria-label="Jumlah ${p.name}"><button type="button" data-c="plus" data-id="${id}" aria-label="Tambah ${p.name}">+</button></div><button type="button" class="text-sm underline" data-c="del" data-id="${id}" style="color:var(--muted)">Hapus</button></div></div>`;
+    return `<div class="border-b py-3" style="border-color:var(--line)"><div class="flex justify-between gap-3"><div><p class="font-extrabold">${p.name}</p><p class="text-sm" style="color:var(--muted)">${rp(p.price)} / ${p.per}</p></div><p class="font-extrabold">${rp(p.price*n)}</p></div><div class="mt-2 flex items-center justify-between"><div class="stepper"><button type="button" data-c="minus" data-id="${id}" aria-label="Kurangi ${p.name}">−</button><input value="${n}" readonly aria-label="Jumlah ${p.name}"><button type="button" data-c="plus" data-id="${id}" aria-label="Tambah ${p.name}">+</button></div><button type="button" class="btn-hapus" data-c="del" data-id="${id}"><i class="fa-solid fa-trash-can"></i><span>Hapus</span></button></div></div>`;
   }).join('') + `<div class="mt-4 flex justify-between text-lg font-extrabold"><span>Total</span><span>${rp(total(cartItems()))}</span></div><button type="button" class="btn mt-4 w-full" data-c="checkout">Checkout semua</button>`;
 }
-function showShop(){ dlg.classList.add('hidden'); document.querySelector('main').classList.remove('hidden'); window.scrollTo(0, 0); }
+
 function renderSummary(){
   order = cartItems();
   if(!order.length){ showShop(); toast('Keranjang masih kosong'); return; }
   document.getElementById('sumList').innerHTML = order.map(i => {
     const p = P.find(x => x.id===i.id);
-    return `<li class="border-b py-3" style="border-color:var(--line)"><div class="flex justify-between gap-3"><div><p class="font-extrabold">${p.name}</p><p class="text-sm" style="color:var(--muted)">${rp(p.price)} / ${p.per}</p></div><p class="font-extrabold">${rp(p.price*i.n)}</p></div><div class="mt-2 flex items-center justify-between"><div class="stepper"><button type="button" data-s="minus" data-id="${i.id}" aria-label="Kurangi ${p.name}">−</button><input value="${i.n}" readonly aria-label="Jumlah ${p.name}"><button type="button" data-s="plus" data-id="${i.id}" aria-label="Tambah ${p.name}">+</button></div><button type="button" class="text-sm underline" data-s="del" data-id="${i.id}" style="color:var(--muted)">Hapus</button></div></li>`;
+    return `<li class="border-b py-3" style="border-color:var(--line)"><div class="flex justify-between gap-3"><div><p class="font-extrabold">${p.name}</p><p class="text-sm" style="color:var(--muted)">${rp(p.price)} / ${p.per}</p></div><p class="font-extrabold">${rp(p.price*i.n)}</p></div><div class="mt-2 flex items-center justify-between"><div class="stepper"><button type="button" data-s="minus" data-id="${i.id}" aria-label="Kurangi ${p.name}">−</button><input value="${i.n}" readonly aria-label="Jumlah ${p.name}"><button type="button" data-s="plus" data-id="${i.id}" aria-label="Tambah ${p.name}">+</button></div><button type="button" class="btn-hapus" data-s="del" data-id="${i.id}"><i class="fa-solid fa-trash-can"></i><span>Hapus</span></button></div></li>`;
   }).join('');
   document.getElementById('sumTotal').textContent = rp(total(order));
 }
+
 document.getElementById('sumList').addEventListener('click', e => {
   const b = e.target.closest('[data-s]'); if(!b) return;
   const c = b.dataset.s, id = b.dataset.id;
