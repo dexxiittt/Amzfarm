@@ -84,13 +84,15 @@ form.addEventListener('submit', e => {
     daftarPesanan = itemsText.slice(0, -1).join(', ') + ', dan ' + itemsText[itemsText.length - 1];
   }
 
+  const totalHarga = rp(total(order));
+
   let text = `Halo kak, pesan ${daftarPesanan}`;
 
   const nama = f.get('nama');
   const alamat = f.get('alamat');
   const bayar = f.get('bayar');
   if (nama || alamat) {
-    text += `\n\nDetail Pemesan:\nNama: ${nama}\nAlamat: ${alamat}\nPembayaran: ${bayar}`;
+    text += `\n\nDetail Pemesan:\nNama: ${nama}\nAlamat: ${alamat}\nPembayaran: ${bayar}\nTotal Belanja: ${totalHarga}`;
   }
 
   const waUrl = `${WA}?text=${encodeURIComponent(text)}`;
