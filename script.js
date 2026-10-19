@@ -95,25 +95,32 @@ form.addEventListener('submit', e => {
   e.preventDefault();
   const f = new FormData(form);
 
-  const itemsText = order.map(i => {
-    const p = P.find(x => x.id === i.id);
-    let name = p ? p.name : i.id;
-    if (i.id === 'pakcoy') name = 'pokcoy';
-    else name = name.toLowerCase();
-    return `${i.n} ${name}`;
+  // 1. Format teks tiap item lengkap dengan kalkulasi berat (kg / gram)
+  const itemsTextArr = order.map(i => {
+    if (i.id === 'pakcoy') {
+      return `${i.n} pokcoy (${i.n}kg)`;
+    } else if (i.id === 'sweet') {
+      return `${i.n} sweet mint (${i.n * 50}gram)`;
+    } else if (i.id === 'apple') {
+      return `${i.n} apple mint (${i.n * 50}gram)`;
+    } else {
+      const p = P.find(x => x.id === i.id);
+      return `${i.n} ${p ? p.name.toLowerCase() : i.id}`;
+    }
   });
 
-  let daftarPesanan = '';
-  if (itemsText.length === 1) {
-    daftarPesanan = itemsText[0];
-  } else if (itemsText.length === 2) {
-    daftarPesanan = itemsText.join(' dan ');
-  } else if (itemsText.length > 2) {
-    daftarPesanan = itemsText.slice(0, -1).join(', ') + ', dan ' + itemsText[itemsText.length - 1];
+  // 2. Gabungkan teks untuk pesan WhatsApp / Salin Pesan
+  let daftarPesananWA = '';
+  if (itemsTextArr.length === 1) {
+    daftarPesananWA = itemsTextArr[0];
+  } else if (itemsTextArr.length === 2) {
+    daftarPesananWA = itemsTextArr.join(' dan ');
+  } else if (itemsTextArr.length > 2) {
+    daftarPesananWA = itemsTextArr.slice(0, -1).join(', ') + ', dan ' + itemsTextArr[itemsTextArr.length - 1];
   }
 
   const totalHarga = rp(total(order));
-  let text = `Halo kak, pesan ${daftarPesanan}`;
+  let text = `Halo kak, pesan ${daftarPesananWA}`;
 
   const nama = f.get('nama');
   const alamat = f.get('alamat');
@@ -124,8 +131,14 @@ form.addEventListener('submit', e => {
 
   const waUrl = `${WA}?text=${encodeURIComponent(text)}`;
 
-  // TAMPILAN CARD DETAIL PESANAN
-  document.getElementById('okItemText').textContent = daftarPesanan || '-';
+  // 3. TAMPILAN UI BOX DETAIL ITEM (Masing-masing item dibuatkan box rapi tersendiri)
+  const itemBoxesHtml = itemsTextArr.map(item => `
+    <div class="p-2.5 my-1.5 rounded-xl border border-[rgba(166,232,110,0.25)] bg-[rgba(166,232,110,0.08)] text-sm font-semibold text-[var(--calm)]">
+      ${item}
+    </div>
+  `).join('');
+
+  document.getElementById('okItemText').innerHTML = itemBoxesHtml || '-';
   document.getElementById('okNama').textContent = nama || '-';
   document.getElementById('okBayar').textContent = bayar || '-';
   document.getElementById('okAlamat').textContent = alamat || '-';
