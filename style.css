@@ -437,6 +437,133 @@ textarea.field { min-height: 100px; resize: vertical; }
   transform: translateY(0) scale(0.95);
 }
 
+/* =========================================================
+   17. PREMIUM SUCCESS CHECKOUT CARD & PULSE ANIMATION
+   ========================================================= */
+
+/* Animasi Detak Check Icon ala GoPay */
+.check-pulse-wrapper {
+  position: relative;
+  width: 76px;
+  height: 76px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.check-pulse-ring {
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  background: rgba(166, 232, 110, 0.25);
+  animation: gopay-pulse 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+}
+
+.check-pulse-icon {
+  position: relative;
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: var(--leaf);
+  color: var(--on-leaf);
+  display: grid;
+  place-items: center;
+  font-size: 1.85rem;
+  box-shadow: 0 0 30px rgba(166, 232, 110, 0.4);
+  animation: gopay-heartbeat 1.8s ease-in-out infinite;
+}
+
+@keyframes gopay-pulse {
+  0% { transform: scale(0.85); opacity: 0.9; }
+  50% { transform: scale(1.32); opacity: 0; }
+  100% { transform: scale(1.32); opacity: 0; }
+}
+
+@keyframes gopay-heartbeat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.06); }
+}
+
+/* Glassmorphism Detail Card Grid */
+.order-detail-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 20px;
+  text-align: left;
+}
+
+.order-card {
+  background: rgba(23, 43, 30, 0.55);
+  border: 1px solid rgba(196, 224, 199, 0.12);
+  border-radius: 16px;
+  padding: 14px 16px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
+}
+
+.order-card:hover {
+  border-color: rgba(166, 232, 110, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.order-card-header {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--calm);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.order-card-value {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.5;
+}
+
+.order-card.total-card {
+  background: rgba(166, 232, 110, 0.08);
+  border-color: rgba(166, 232, 110, 0.28);
+}
+
+/* Badge Style Tombol Tutup (#done) */
+.btn-close-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 22px;
+  margin-top: 22px;
+  border: 1px solid rgba(196, 224, 199, 0.2);
+  border-radius: 99px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--muted) !important;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--transition), border-color var(--transition), color var(--transition), transform var(--transition), box-shadow var(--transition);
+}
+
+.btn-close-badge:hover {
+  background: rgba(255, 140, 131, 0.12);
+  border-color: rgba(255, 140, 131, 0.45);
+  color: #ffa199 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(255, 140, 131, 0.15);
+}
+
+.btn-close-badge:active {
+  transform: translateY(0) scale(0.96);
+}
+
 /* 13. RESPONSIVE — TABLET */
 @media (max-width: 900px) {
   :root { --page-width: 100%; }
