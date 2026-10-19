@@ -124,6 +124,13 @@ form.addEventListener('submit', e => {
 
   const waUrl = `${WA}?text=${encodeURIComponent(text)}`;
 
+  // TAMPILAN CARD DETAIL PESANAN
+  document.getElementById('okItemText').textContent = daftarPesanan || '-';
+  document.getElementById('okNama').textContent = nama || '-';
+  document.getElementById('okBayar').textContent = bayar || '-';
+  document.getElementById('okAlamat').textContent = alamat || '-';
+  document.getElementById('okTotal').textContent = totalHarga;
+
   document.getElementById('msg').textContent = text;
   document.getElementById('waGo').href = waUrl;
   document.getElementById('formView').classList.add('hidden');
@@ -134,6 +141,7 @@ form.addEventListener('submit', e => {
   form.reset();
   if(fromCart){ cart = {}; saveCart(); renderCart(); }
 });
+
 
 const cartDlg = document.getElementById('cartDlg');
 let cart = {};
