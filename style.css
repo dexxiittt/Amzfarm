@@ -63,11 +63,18 @@ button { color: inherit; }
 ::selection { color: var(--on-leaf); background: var(--leaf); }
 
 /* 02. ACCESSIBILITY & MOTION */
-a:focus-visible, button:focus-visible, input:focus-visible,
-textarea:focus-visible, select:focus-visible, label:focus-within {
+
+a:focus-visible, button:focus-visible,
+input:focus-visible, textarea:focus-visible,
+select:focus-visible {
   outline: 2px solid var(--leaf);
   outline-offset: 4px;
 }
+
+#checkoutPage label:focus-within {
+  outline: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
 }
