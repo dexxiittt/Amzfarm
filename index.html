@@ -166,17 +166,87 @@
       <button class="btn w-full" type="submit">Konfirmasi pesanan</button>
     </form>
   </div>
-  <div id="okView" class="hidden p-6 text-center">
-    <div class="mx-auto grid h-16 w-16 place-items-center rounded-full text-3xl" style="background:var(--leaf);color:var(--on-leaf)">✓</div>
-    <h2 class="mt-4 text-2xl font-extrabold" style="color:var(--forest)">Pesanan siap dikirim</h2>
-    <p class="mt-2" style="color:var(--muted)">Lanjutkan ke WhatsApp agar AMZ Farm dapat memproses pesanan Anda. Pesan sudah disiapkan.</p>
-    <pre id="msg" class="mt-4 whitespace-pre-wrap rounded-2xl p-4 text-left text-sm" style="background:var(--leaf-soft);font-family:inherit"></pre>
-    <div class="mt-5 flex flex-col gap-3 sm:flex-row">
-      <a id="waGo" class="btn flex-1" target="_blank" rel="noopener" href="#">Kirim lewat WhatsApp</a>
-      <button id="copy" class="btn alt flex-1" type="button">Salin pesan</button>
+  <!-- OK VIEW / SUCCESS SCREEN UPGRADED -->
+<div id="okView" class="hidden p-6 text-center">
+  
+  <!-- 1. Animated Check Icon (Pulse ala GoPay) -->
+  <div class="check-pulse-wrapper">
+    <div class="check-pulse-ring"></div>
+    <div class="check-pulse-icon">
+      <i class="fa-solid fa-check"></i>
     </div>
-    <button id="done" class="mt-4 underline" type="button" style="color:var(--muted)">Tutup</button>
   </div>
+
+  <h2 class="mt-5 text-2xl font-extrabold" style="color:var(--calm)">Pesanan siap dikirim</h2>
+  <p class="mt-1 text-sm" style="color:var(--muted)">Lanjutkan ke WhatsApp agar AMZ Farm dapat memproses pesanan Anda. Pesan sudah disiapkan.</p>
+
+  <!-- 2. Detail Pesanan Premium (Card Per Informasi) -->
+  <div class="order-detail-grid">
+    <!-- Card Item Pesanan -->
+    <div class="order-card">
+      <div class="order-card-header">
+        <i class="fa-solid fa-basket-shopping text-[var(--leaf)]"></i> Item Pesanan
+      </div>
+      <div id="okItemText" class="order-card-value text-base font-bold text-[var(--calm)]">-</div>
+    </div>
+
+    <!-- Grid 2 Kolom untuk Nama & Pembayaran -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+      <!-- Card Nama -->
+      <div class="order-card">
+        <div class="order-card-header">
+          <i class="fa-solid fa-user text-[var(--leaf)]"></i> Nama Pemesan
+        </div>
+        <div id="okNama" class="order-card-value">-</div>
+      </div>
+
+      <!-- Card Pembayaran -->
+      <div class="order-card">
+        <div class="order-card-header">
+          <i class="fa-solid fa-wallet text-[var(--leaf)]"></i> Metode Pembayaran
+        </div>
+        <div id="okBayar" class="order-card-value font-bold text-[var(--leaf)]">-</div>
+      </div>
+    </div>
+
+    <!-- Card Alamat -->
+    <div class="order-card">
+      <div class="order-card-header">
+        <i class="fa-solid fa-location-dot text-[var(--leaf)]"></i> Alamat Pengiriman
+      </div>
+      <div id="okAlamat" class="order-card-value font-normal text-sm opacity-90 break-words">-</div>
+    </div>
+
+    <!-- Card Total Belanja -->
+    <div class="order-card total-card flex items-center justify-between">
+      <div class="order-card-header !mb-0">
+        <i class="fa-solid fa-receipt text-[var(--leaf)]"></i> Total Belanja
+      </div>
+      <div id="okTotal" class="text-lg font-extrabold text-[var(--leaf)]">Rp 0</div>
+    </div>
+  </div>
+
+  <!-- Textarea WhatsApp tersembunyi (tetap ada untuk kebutuhan fitur Salin & WhatsApp) -->
+  <pre id="msg" class="hidden"></pre>
+
+  <!-- Tombol Aksi Utama -->
+  <div class="mt-6 flex flex-col gap-3 sm:flex-row">
+    <a id="waGo" class="btn flex-1" target="_blank" rel="noopener" href="#">
+      <i class="fa-brands fa-whatsapp text-lg"></i> Kirim lewat WhatsApp
+    </a>
+    <button id="copy" class="btn alt flex-1" type="button">
+      <i class="fa-regular fa-copy"></i> Salin pesan
+    </button>
+  </div>
+
+  <!-- 3. Tombol Tutup Badge -->
+  <button id="done" class="btn-close-badge" type="button">
+    <i class="fa-solid fa-xmark"></i>
+    <span>Tutup</span>
+  </button>
+
+</div>
+
 </div></section>
 
 <script src="script.js?=v3"></script>
