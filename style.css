@@ -282,7 +282,30 @@ dialog #cartClose { width: 38px; height: 38px; border: 1px solid var(--line); bo
   color: var(--ink); font: inherit; outline: none; transition: border-color var(--transition), box-shadow var(--transition), background var(--transition);
 }
 .field::placeholder { color: #708475; }
-.field:focus { border-color: rgba(166, 232, 110, .7); box-shadow: 0 0 0 3px rgba(166, 232, 110, .09); background: #102016; }
+
+/* Premium Focus — Checkout Fields */
+#checkoutPage .field {
+  outline: none;
+  transition:
+    border-color 280ms ease,
+    box-shadow 280ms ease,
+    background 280ms ease,
+    transform 280ms ease;
+}
+
+#checkoutPage .field:hover {
+  border-color: rgba(196, 224, 199, .28);
+  background: #102016;
+}
+
+#checkoutPage .field:focus,
+#checkoutPage .field:focus-visible {
+  border-color: rgba(196, 224, 199, .28);
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(196, 224, 199, .035);
+  background: #102016;
+}
+
 textarea.field { min-height: 100px; resize: vertical; }
 #checkoutPage .rounded-2xl[aria-live="polite"], #msg { border: 1px solid var(--line); border-radius: 16px !important; background: #0d1a12 !important; color: #dbe9dc; }
 .pay {
