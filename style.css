@@ -564,6 +564,94 @@ textarea.field { min-height: 100px; resize: vertical; }
   transform: translateY(0) scale(0.96);
 }
 
+/* =========================================================
+   CUSTOM PRICE VARIANT DROPDOWN
+   ========================================================= */
+.price-dropdown-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.variant-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border-radius: 8px;
+  background: rgba(166, 232, 110, 0.12);
+  border: 1px solid rgba(166, 232, 110, 0.3);
+  color: var(--leaf);
+  cursor: pointer;
+  font-size: 0.75rem;
+  transition: all 0.2s ease;
+}
+
+.variant-toggle-btn:hover {
+  background: rgba(166, 232, 110, 0.25);
+  border-color: var(--leaf);
+  transform: translateY(-1px);
+}
+
+.variant-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  z-index: 40;
+  min-width: 200px;
+  background: rgba(18, 34, 24, 0.95);
+  border: 1px solid rgba(166, 232, 110, 0.3);
+  border-radius: 14px;
+  padding: 6px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  animation: dropdownFadeIn 0.2s ease;
+}
+
+.variant-dropdown-menu.hidden {
+  display: none !important;
+}
+
+.variant-dropdown-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: transparent;
+  border: none;
+  color: var(--ink);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s ease;
+}
+
+.variant-dropdown-item:hover {
+  background: rgba(166, 232, 110, 0.15);
+  color: var(--leaf);
+}
+
+.variant-dropdown-item.active {
+  background: rgba(166, 232, 110, 0.25);
+  color: var(--leaf);
+  font-weight: 700;
+}
+
+@keyframes dropdownFadeIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 /* 13. RESPONSIVE — TABLET */
 @media (max-width: 900px) {
   :root { --page-width: 100%; }
