@@ -7,7 +7,6 @@ const P = [
     id: 'pakcoy',
     name: 'Pakcoy Hidroponik',
     variants: [
-      { id: '1kg', price: 30000, per: 'kg', unit: '1kg', lbl: 'Jumlah (kg)', name: 'Pakcoy Hidroponik (1 kg)' },
       { id: '250g', price: 3000, per: '250 gram', unit: '250g', lbl: 'Jumlah (250g)', name: 'Pakcoy Hidroponik (250g)' }
     ],
     selectedVariant: 0,
@@ -36,7 +35,7 @@ const P = [
   }
 ];
 
-// Helper untuk mendapatkan informasi detail item (dukungan variasi & item biasa)
+// Helper untuk mendapatkan informasi detail item
 function getItemInfo(itemKey) {
   if (itemKey.includes('-')) {
     const [pId, vId] = itemKey.split('-');
@@ -252,9 +251,7 @@ form.addEventListener('submit', e => {
   const itemsTextArr = order.map(i => {
     const item = getItemInfo(i.id);
     if (!item) return '';
-    if (i.id === 'pakcoy-1kg' || i.id === 'pakcoy') {
-      return `${i.n} pakcoy (${i.n}kg)`;
-    } else if (i.id === 'pakcoy-250g') {
+    if (i.id === 'pakcoy-250g' || i.id === 'pakcoy') {
       return `${i.n} pakcoy 250g (${i.n * 250}gram)`;
     } else if (i.id === 'sweet') {
       return `${i.n} sweet mint (${i.n * 50}gram)`;
